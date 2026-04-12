@@ -69,21 +69,6 @@ pipeline {
             }
         }
 
-        stage('Upload Files to S3') {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'jenkinsTest'
-                ]]) {
-                    sh '''
-                    BUCKET_NAME=$(terraform output -raw bucket_name)
-                    aws s3 cp i_love_ethiopian_women.txt s3://$BUCKET_NAME/
-                    aws s3 cp ethiopian_women.png s3://$BUCKET_NAME/
-                    '''
-                }
-            }
-        }
-
         stage('Optional Destroy') {
             steps {
                 script {
